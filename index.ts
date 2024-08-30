@@ -1,4 +1,6 @@
-export const express = require('express');
+// export const express = require('express');
+import express from "express";
+
 require('dotenv').config();
 const { dbConnection } = require('./database/config');
 const cors = require('cors');
