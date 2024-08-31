@@ -1,5 +1,5 @@
-// export const express = require('express');
-import express from "express";
+export const express = require('express');
+// import express from "express";
 
 require('dotenv').config();
 const { dbConnection } = require('./database/config');
