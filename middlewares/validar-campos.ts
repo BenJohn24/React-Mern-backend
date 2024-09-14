@@ -14,6 +14,7 @@ const validarCampos = (req: Request, res: Response, next: NextFunction) => {
 
     next();
 }
-module.exports = {
-    validarCampos
-};
+// module.exports = {
+//     validarCampos
+// };
+export default validarCampos

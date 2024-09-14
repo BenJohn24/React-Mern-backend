@@ -1,9 +1,16 @@
-const router = require('express').Router();
-const  { crearUsuario, loginUsuario, revalidarToken }  = require('../controllers/auth');
-const { check } = require('express-validator');
-const { validarCampos } = require('../middlewares/validar-campos');
-const { validarJWT } = require('../middlewares/validar-jwt');
+// const router = require('express').Router();
+import { Router } from 'express';
+import { crearUsuario, loginUsuario, revalidarToken } from '../controllers/auth';
+// const  { crearUsuario, loginUsuario, revalidarToken }  = require('../controllers/auth');
+import { check } from 'express-validator';
+// const { check } = require('express-validator');
+import validarCampos from '../middlewares/validar-campos';
+// const { validarCampos } = require('../middlewares/validar-campos');
+import validarJWT from '../middlewares/validar-jwt';
+import { CustomRequest } from '../interfaces/CustomRequest';
+// const { validarJWT } = require('../middlewares/validar-jwt');
 
+const router = Router();
 
 router.post('/new',
     [ // middleware
@@ -23,7 +30,8 @@ router.post('/',
         ,validarCampos
     ], 
     loginUsuario);
+    // 
+router.get('/renew', validarJWT , revalidarToken);
 
-router.get('/renew', validarJWT, revalidarToken);
-
-module.exports = router;
+export default router;
+// module.exports = router;

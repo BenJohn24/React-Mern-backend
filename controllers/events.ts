@@ -3,7 +3,7 @@ import Evento from '../models/Evento';
 import { CustomRequest } from "../interfaces/CustomRequest";
 import { ObjectId } from "mongoose";
 
-const getEventos = async(req: Request, res: Response) => {
+export const getEventos = async(req: Request, res: Response) => {
 
     const eventos = await Evento.find()
                                 .populate('user', 'name');
@@ -13,11 +13,11 @@ const getEventos = async(req: Request, res: Response) => {
         eventos
     });
 }
-const crearEvento = async(req: CustomRequest, res: Response) => {
+export const crearEvento = async(req: CustomRequest, res: Response) => {
 
     const evento = new Evento( req.body );
     try{
-      evento.user = req.uid;
+      evento.user = req.uid!;
       const eventoGuardado = await evento.save();
 
       res.json({
@@ -34,7 +34,7 @@ const crearEvento = async(req: CustomRequest, res: Response) => {
     }
  
 }
-const actualizarEvento = async(req: CustomRequest, res: Response) => {
+export const actualizarEvento = async(req: CustomRequest, res: Response) => {
     const eventoId = req.params.id;
 
     try{
@@ -76,7 +76,7 @@ const actualizarEvento = async(req: CustomRequest, res: Response) => {
     }
 }
 
-const eliminarEvento = async(req: CustomRequest, res:Response) => {
+export const eliminarEvento = async(req: CustomRequest, res:Response) => {
     const eventoId = req.params.id;
     try {
         const evento = await Evento.findById( eventoId );
@@ -116,9 +116,9 @@ const eliminarEvento = async(req: CustomRequest, res:Response) => {
     })
 }
 
-module.exports = {
-    getEventos,
-    crearEvento,
-    actualizarEvento,
-    eliminarEvento
-}
+// module.exports = {
+//     getEventos,
+//     crearEvento,
+//     actualizarEvento,
+//     eliminarEvento
+// }

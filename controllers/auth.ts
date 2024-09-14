@@ -2,9 +2,9 @@ import express, { Request, Response } from 'express';
 import bycrypt from 'bcryptjs';
 import Usuario from '../models/Usuario';
 import { CustomRequest } from '../interfaces/CustomRequest';
-const { generarJWT } = require('../helpers/jwt');
+import { generarJWT }  from '../helpers/jwt';
 
-const crearUsuario = async (req: Request, res: Response) => {
+export const crearUsuario = async (req: Request, res: Response) => {
 
     const { name, email, password } =  req.body;
 
@@ -44,7 +44,7 @@ const crearUsuario = async (req: Request, res: Response) => {
     }
 }
 
-const loginUsuario = async (req: Request, res: Response) => {
+export const loginUsuario = async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
 
@@ -86,10 +86,10 @@ const loginUsuario = async (req: Request, res: Response) => {
    
 }
 
-const revalidarToken = async (req: CustomRequest, res: Response) => {
+export const revalidarToken = async (req: CustomRequest, res: Response) => {
 
-    const uid =  req.uid;
-    const name = req.name;
+    const uid =  req.uid!;
+    const name = req.name!;
 
     //generar un nuevo JWT y retornarlo en esta peticion
     const token = await generarJWT( uid, name);
@@ -101,8 +101,8 @@ const revalidarToken = async (req: CustomRequest, res: Response) => {
     });
 }
 
-module.exports = {
-    crearUsuario,
-    loginUsuario,
-    revalidarToken
-}
+// module.exports = {
+//     crearUsuario,
+//     loginUsuario,
+//     revalidarToken
+// }

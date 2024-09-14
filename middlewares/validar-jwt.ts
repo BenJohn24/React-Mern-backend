@@ -1,6 +1,9 @@
-import express, { Request, Response, NextFunction } from 'express';
-const jwt = require('jsonwebtoken');
+import express, { Request, Response, NextFunction, RequestHandler } from 'express';
+// const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 import { CustomRequest } from '../interfaces/CustomRequest';
+import { IJwtPayload } from '../interfaces/IJwtPalyload';
+import e from 'express';
 
 
 const validarJWT = ( req: CustomRequest, res: Response, next: NextFunction ) => {
@@ -15,24 +18,39 @@ const validarJWT = ( req: CustomRequest, res: Response, next: NextFunction ) => 
     }
 
     try{
-        const { uid, name } = jwt.verify(
+        const privateKey: string = process.env.SECRET_JWT_SEED!;
+        let jwtVerify = jwt.verify(
             token,
-            process.env.SECRET_JWT_SEED
+            privateKey
         );
 
-        req.uid = uid;
-        req.name = name;
+        if(typeof jwtVerify === 'object' && jwtVerify !== null && 'uid' in jwtVerify && 'name' in jwtVerify){
+            jwtVerify as IJwtPayload
+            req.uid = jwtVerify.uid;
+            req.name = jwtVerify.name;
+
+        }
+
+        console.log(jwtVerify)
+
 
     }catch( error ){
-        return res.status(401).json({
-            ok:false,
-            msg: 'Token no válido'
-        })
+        if( error instanceof Error){
+            console.log(error.message)
+            return res.status(401).json({
+                ok:false,
+                msg: 'Token no válido',
+                err: error.message
+            })
+        }
+       
     }
     
     next();
 } 
 
-module.exports = {
-    validarJWT
-}
+// module.exports = {
+//     validarJWT
+// }
+
+export default validarJWT;

@@ -1,10 +1,18 @@
-const router = require('express').Router();
-const { validarJWT } = require('../middlewares/validar-jwt');
-const { getEventos, crearEvento, actualizarEvento, eliminarEvento } = require('../controllers/events');
-const { check } = require('express-validator');
-const { validarCampos } = require('../middlewares/validar-campos');
-const { isDate } = require('../helpers/isDate');
+// const router = require('express').Router();
+import { Router } from 'express';
+// const { validarJWT } = require('../middlewares/validar-jwt');
+import  validarJWT  from '../middlewares/validar-jwt';
+// const { getEventos, crearEvento, actualizarEvento, eliminarEvento } = require('../controllers/events');
+import { getEventos, crearEvento, actualizarEvento, eliminarEvento } from '../controllers/events';
+// const { check } = require('express-validator');
+import { check } from 'express-validator';
+// const { validarCampos } = require('../middlewares/validar-campos');
+import  validarCampos from '../middlewares/validar-campos';
+// const { isDate } = require('../helpers/isDate');
+import { isDate } from '../helpers/isDate';
 
+
+const router = Router();
 
 // Todas tienen que pasar por la validación del JWT
 // Obtener eventos
@@ -34,4 +42,5 @@ router.put('/:id',
 // Borrar Evento
 router.delete('/:id', eliminarEvento)
 
-module.exports = router;
+// module.exports = router;
+export default router; 
