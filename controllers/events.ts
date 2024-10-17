@@ -30,6 +30,7 @@ export const crearEvento = async(req: CustomRequest, res: Response) => {
         res.status(500).json({
             ok: false,
             msg: error,
+            txt:'s'
 
         })
     }
